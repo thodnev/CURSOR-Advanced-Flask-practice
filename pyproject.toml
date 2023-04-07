@@ -1,0 +1,42 @@
+# We don't follow PEP8 proposed length as nowadays screens are larger
+# Official is 80, Black is 120, so we have a compromise between the two here
+["setup.cfg".isort]
+line_length = 100
+
+["setup.cfg".flake8]
+max-line-length = 100
+
+# Check McCabe's code complexity using originally proposed value.
+# Defaults to 6
+max-complexity = 10
+
+# darglint
+# Use Google style for docstrings
+# Possible styles: google, numpy, sphinx
+docstring-style = "google"
+
+# short: One-line descriptions are acceptable;
+#        anything more and the docstringwill be fully checked.
+# long:  One-line descriptions and descriptions without arguments/returns/yields/etc.
+#        sections will be allowed.
+#        Anything more, and the docstring will be fully checked.
+# full: (Default) Docstrings will be fully checked
+#strictness=short
+
+# How to report linting violations
+#format = wemake
+
+# Excluded paths
+#extend-exclude = .svn, CVS, .bzr, .hg, .git, __pycache__, .tox, .eggs, *.egg
+
+# Print the source code generating the error/warning in question.
+#show_source = true
+
+# Count the number of occurrences of each error/warning code and print a report
+#statistics = true
+# Print the total number of errors
+#count = true
+
+per-file-ignores = "CHANGELOG.md:NIP103 README.md:NIP103"
+
+#present = { ".gitignore" = "A project should have `.gitignore` file" }
