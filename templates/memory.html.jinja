@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HTML5">
+  <meta name="author" content="Author">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ pagetitle }}</title>
+  <link rel="stylesheet" href="{{ url_for('assets.static', filename='style.css') }}">
+  <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
+</head>
+<body>
+  <h1>{{ statname | title }} Stats:</h1>
+  <span>Available memory: {{ '{:.2f}'.format(mem['free'] / (1024 ** 2)) }} / {{ '%.2f' | format(mem['total'] / (1024 ** 2)) }} MiB</span>
+  <div class="pbar" id="gauge" style="box-shadow: black 0px 0px 5px; display: block;">
+      <div class="bar" style="background-color: rgb(72, 239, 82);
+                              transform: translate({{ mem['percent'] }}%);">
+      <div class="data" style="display: flex;
+                               justify-content: center;
+                               position: absolute;
+                               right: 0;
+                               width: {{ mem['percent'] }}%;">
+      {{ mem['percent'] }}%
+    </div></div>
+  </div> 
+  <!-- <script src="{{ url_for('assets.static', filename='script.js') }}"></script> -->
+</body>
+</html>
+ 
