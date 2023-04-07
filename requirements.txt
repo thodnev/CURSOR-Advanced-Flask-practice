@@ -1,0 +1,9 @@
+# Listing pip required packages excplicitly
+# install with 'pip install -r requirements.txt' inside venv
+Flask
+Flask-SQLAlchemy
+Pillow
+
+# From previous parts:
+# psuil
+
