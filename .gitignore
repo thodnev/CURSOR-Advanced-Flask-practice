@@ -1,5 +1,8 @@
 # Based on Github Python gitignore
 
+# virtualenv as symlinked (not dir)
+venv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
