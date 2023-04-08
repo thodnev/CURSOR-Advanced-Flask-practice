@@ -1,23 +1,11 @@
+from utils import ModelBase
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
 
-class ReprMixin:
-    def __repr__(self):
-        d = {k: v for k, v in vars(self).items()
-                if not k.startswith('_')}
-        basic = super().__repr__()
-        if not d:
-            return basic
-        basic, cut = basic[:-1], basic[-1]
-
-        add = ', '.join([f'{k}={v!r}' for k, v in d.items()])
-
-        res = f'{basic} ~ ({add}){cut}'
-        return res
+db = SQLAlchemy(model_class=ModelBase)       # model_class to use customized base
 
 
-class File(ReprMixin, db.Model):
+class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     md5hash = db.Column(db.String(32))
     name = db.Column(db.String(32 + len('.webm')))
