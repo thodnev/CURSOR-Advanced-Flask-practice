@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- based on example https://nikitahl.com/custom-styled-input-type-file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
+</head>
+<body>
+<div id="container">
+    <span class="text">
+        <h2>File upload</h2>
+        <p style="margin-bottom: 10px">{{ status }}</p>
+    </span>
+    
+    <form enctype="multipart/form-data" method="post"{{ (' action="%s"' % action if action else '') | safe  }}>
+        <label for="images" class="drop-container">
+            <span class="drop-title">Drop files here</span>
+            or
+            <input type="file" id="images" name="images" accept="image/*" required>
+        </label>
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+</body>
+</html>
+ 
+ 

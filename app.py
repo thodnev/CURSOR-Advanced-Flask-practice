@@ -1,6 +1,8 @@
 import catday
-from models import db   # Flask-SQLAlchemy
-from flask import Flask, Response, abort, send_file
+import models   # Flask-SQLAlchemy
+from models import db
+from controllers import Storage, StorageError
+from flask import Flask, Response, request, abort, send_file, render_template
 import logging
 
 app = Flask(__name__)
@@ -10,6 +12,12 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testdb.sqlite'
 # Attach Flask-SQLAlchemy to app
 db.init_app(app)
+
+# Limit maximum incoming length to 16 MiB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+# This is our own controller
+storage = Storage(directory='uploads', db=db, model=models.File)
+storage.init_app(app)
 
 # Add all catday routes
 app.register_blueprint(catday.cats_bp, url_prefix='/cats')
@@ -25,7 +33,28 @@ def hello_world():
     ret += r' style="max-height: 90vh; margin: auto; display: flex"></img>'
     return Response(ret, mimetype='text/html')
 
-    
+# (!) IMPORTANT (!):
+# Below is minimal example. Uploads (as well as any other user input)
+# should be handled with caution and never trusted
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    msg = ''
+
+    if request.method == 'POST':
+        file = request.files['images']
+        try:
+            dbfile = app.storage.store(
+                iobuf=file.stream, name=file.filename,
+                unify_name=True, fastcheck=False)
+        except StorageError as err:
+            msg = str(err)
+        else:
+            msg = f'Saved as {dbfile.name} with id {dbfile.id}'
+
+    return render_template('upload.html', status=msg)
+
+        
+
 
 
 if __name__ == '__main__':

@@ -51,6 +51,22 @@ class File(db.Model):
         found = db.session.scalars(
             db.select(cls).filter(cls.hash == hash))
         return found
+    
+    @classmethod
+    def get_by_filename(cls, filename):
+        found = db.session.execute(
+            db.select(cls).filter(cls.name == filename))
+        return found.scalar_one_or_none()
+    
+    @classmethod
+    def get_by_id(cls, id):
+        found = db.session.execute(
+            db.select(cls).filter(cls.id == id))
+        found = found.scalar_one_or_none()
+
+        if found is None:
+            raise LookupError
+        return found
 
 
 

@@ -2,6 +2,8 @@
 
 # virtualenv as symlinked (not dir)
 venv
+# App uploads directory
+/uploads/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -73,6 +73,8 @@ def get_cat(numext, try_random=False):
         return ret
 
 
+
+
 # The blueprint where all related routes reside
 cats_bp = Blueprint('cats', __name__, static_folder=None)
 
